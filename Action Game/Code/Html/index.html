@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Game - IDragon</title>
+    <link rel="stylesheet" href="../CSS/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: red;
+            overflow: hidden;
+        }
+
+        .container {
+            background-image: url(../bg.png);
+            background-repeat: no-repeat;
+            background-size: 100vw 100vh;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .dino {
+            background-image: url(../dino.png);
+            background-repeat: no-repeat;
+            width: 233px;
+            height: 114px;
+            background-size: cover;
+            position: absolute;
+            bottom: 5px;
+            left: 52px;
+        }
+
+        .obstacle {
+            background-image: url(../dragon.png);
+            background-size: cover;
+            width: 166px;
+            height: 113px;
+            position: absolute;
+            bottom: 0px;
+            left: 700px;
+        }
+
+        .obstacleAni {
+            animation: obstacleAni 5s linear infinite;
+
+        }
+
+        .animateDino {
+            animation: dino 0.6s linear;
+        }
+
+        .gameover {
+            position: relative;
+            top: 63px;
+            font-size: 53px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+            /* visibility: hidden; */
+        }
+
+        #scorecont {
+            color: #54212f;
+            font-weight: bold;
+            font-size: 25px;
+            position: absolute;
+            right: 45px;
+            top: 31px;
+            border: 2px solid black;
+            padding: 10px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            border-radius: 10px;
+            
+        }
+
+        @keyframes dino {
+            0% {
+                bottom: 0px;
+            }
+
+            50% {
+                bottom: 422px;
+            }
+
+            100% {
+                bottom: 0px;
+            }
+        }
+
+        @keyframes obstacleAni {
+            0% {
+                left: 100vw;
+            }
+
+            100% {
+                left: -10vw;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- <div class="gameover">Welcome to IDragon - Created By Darshan </div> -->
+        <div class="gameover">Welcome to IDragon - Adventures</div>
+        <div class="dino"></div>
+        <div id="scorecont">Total Score 0</div>
+        <div class="obstacle obstacleAni "></div>
+        <!-- <a href=""></a> -->
+    </div>
+
+    <script>
+        score = 0;
+        cross = true;
+
+        audio = new Audio('music.mp3');
+        audiogo = new Audio('gameover.mp3');
+        setTimeout(() => {
+            audio.play();
+        }, 1000);
+        document.onkeydown = function (e) {
+            // console.log("Key code is : ", e.keyCode);
+            if (e.keyCode == 38) {
+                dino = document.querySelector('.dino');
+                dino.classList.add('animateDino');
+                setTimeout(() => {
+                    // console.log("Hi");
+                    dino.classList.remove('animateDino');
+                }, 700);
+            }
+
+            if (e.keyCode == 39) {
+                dino = document.querySelector('.dino');
+                dinoX = parseInt(window.getComputedStyle(dino, null).getPropertyValue('left'));
+                dino.style.left = dinoX + 112 + "px";
+            }
+            if (e.keyCode == 37) {
+                dino = document.querySelector('.dino');
+                dinoX = parseInt(window.getComputedStyle(dino, null).getPropertyValue('left'));
+                dino.style.left = dinoX - 112 + "px";
+            }
+        }
+
+        setInterval(() => {
+            dino = document.querySelector('.dino');
+            gameover = document.querySelector('.gameover');
+            obstacle = document.querySelector('.obstacle');
+            dx = parseInt(window.getComputedStyle(dino, null).getPropertyValue('left'));
+            dy = parseInt(window.getComputedStyle(dino, null).getPropertyValue('top'));
+            ox = parseInt(window.getComputedStyle(obstacle, null).getPropertyValue('left'));
+            oy = parseInt(window.getComputedStyle(obstacle, null).getPropertyValue('top'));
+
+            offsetx = Math.abs(dx - ox);
+            offsety = Math.abs(dy - oy);
+            if (offsetx < 73 && offsety < 52) {
+                gameover.innerHTML = "Game Over - Reload to Play Again";
+                obstacle.classList.remove('obstacleAni');
+                audiogo.play();
+                setTimeout(() => {
+                    audio.pause();
+                    audiogo.pause();
+                }, 1000);
+            } else if (offsetx < 145 && cross) {
+                score += 1;
+                // console.log(score);
+                updatescore(score);
+                cross = false;
+                setTimeout(() => {
+                    cross = 1;
+                }, 1000);
+
+            }
+
+
+        }, 100);
+
+        function updatescore(score) {
+            scorecont.innerHTML = "Your Score : " + score;
+        }
+
+
+    </script>
+</body>
+
+</html>

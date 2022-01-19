@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./prism.css" />
+
+    <script src="./prism.js"></script>
+    <title></title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@600&display=swap");
+
+      @import url("https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@600&family=Pacifico&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        /* background-color: lightblue; */
+      }
+
+      body {
+        background-color: lightblue;
+      }
+      b {
+        color: black;
+      }
+      nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: black;
+        color: wheat;
+        font-family: cursive;
+        font-weight: 900;
+      }
+
+      .logo {
+        display: block;
+      }
+
+      .logo img {
+        width: 100px;
+      }
+
+      .container {
+        /* background-color: rgb(107, 50, 50); */
+        /* width: 60vw; */
+        padding: 10px;
+        font-family: system-ui;
+        padding: 32px 0px;
+        /* margin: auto; */
+        font-weight: 500;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: justify;
+        /* border: 2px solid rebeccapurple; */
+        font-size: 2vw;
+      }
+
+      .toolbar-item button {
+        cursor: pointer !important;
+        color: white !important;
+        border: 1px solid white !important;
+        border-radius: 15px !important;
+        padding: 5px 4px !important;
+      }
+
+      .container li code {
+        word-wrap: break-word;
+      }
+
+      @media only screen and (min-width: 1300px) {
+        * {
+          font-size: 20px;
+        }
+      }
+
+      footer {
+        background-color: black;
+        color: wheat;
+        text-align: center;
+        width: 100vw;
+        height: 68px;
+        margin-bottom: 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Baloo Bhai 2", cursive;
+        letter-spacing: 1.5px;
+        word-spacing: 2px;
+      }
+
+      footer b {
+        font-family: "Pacifico", cursive;
+        word-spacing: 2px;
+        letter-spacing: 1.5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <span class="logo"><img src="./extra.png" alt="" /></span>
+      <div class="content center">This Cp Cheatsheet is For You!</div>
+    </nav>
+
+    <div class="container">
+      <ol>
+        <li>
+          <b>Sieve of Eratosthenes with 1</b>
+          <pre class="language-cpp"><code>bool is_prime[1000001];
+  void sieve()
+  {
+      int maxN = 1000000;
+      for (int i = 1; i <= maxN; i++)
+      {
+          is_prime[i] = 1;
+      }
+      is_prime[0] = is_prime[1] = 0;
+      for (int i = 2; i * i <= maxN; i++)
+      {
+          if (is_prime[i])
+          {
+              for (int j = i * i; j <= maxN; j += i)
+              {
+                  is_prime[j] = 0;
+              }
+          }
+      }
+  }</code></pre>
+        </li>
+        <li>
+          <b>Sieve of Eratosthenes</b>
+          <pre class="language-cpp"><code> bool prime[1000001];
+   void sieve1()
+   {
+       int maxN = 1000000;
+       prime[0] = prime[1] = 1;
+       for (int i = 2; i * i <= maxN; i++)
+       { 
+           if (!prime[i])
+           {
+               for (int j = i * i; j <= maxN; j += i)
+               {
+                   prime[j] = 1;
+               }
+           }
+       }
+   } </code></pre>
+        </li>
+
+        <li>
+          <b>Binary Exponentiation</b>
+          <pre class="language-cpp">
+<code>using lli = long long int;
+lli binary_exponentiation(lli a, lli b, lli mod = (1e9 + 7))
+{
+    lli ans = 1;
+    // if(b%2==1) this means number b is odd.
+    while (b)
+    {
+        if (b & 1)
+        {
+            ans = (ans * a) % mod;
+        }
+        a = (a * a) % mod;
+        b = (b >> 1);
+    }
+
+    return ans;
+}</code></pre>
+        </li>
+
+        <li>
+          <b>Prime Factorisation </b>
+          <pre
+            class="language-cpp"
+          ><code>//  Time Complexity : O(sqrt(n)) --> Prime Factorisation
+void prime_fact1(int n)
+{
+    for (int i = 2; i * i <= n; i++)
+    {
+        if (n % i == 0)
+        {
+            int ctn = 0;
+            while (n % i == 0)
+                ctn++, n /= i;
+            cout << i << " ^ " << ctn << " , ";
+        }
+    }
+
+    if (n > 2)
+    {
+        cout << n << " 1" << endl;
+    }
+}
+
+int spf[1000001];
+void factor()
+{
+    int maxN = 1000000;
+    for (int i = 0; i <= maxN; i++)
+        spf[i] = i;
+
+    for (int i = 2; i * i <= maxN; i++)
+    {
+        if (spf[i] == i)
+        {
+            for (int j = i * i; j <= maxN; j += i)
+            {
+                if (spf[j] == j)
+                    spf[j] = i;
+            }
+        }
+    }
+}     </code></pre>
+        </li>
+
+        <li>
+          <b>Modulo Inverse</b>
+          <pre class="language-cpp"><code>using lli = long long int;
+lli power(lli a, lli b, lli mod = (1e9 + 7))
+{
+    lli ans = 1;
+    // if(b%2==1) this means number b is odd.
+    while (b)
+    {
+        if (b & 1)
+        {
+            ans = (ans * a) % mod;
+        }
+        a = (a * a) % mod;
+        b = (b >> 1);
+    }
+
+    return ans;
+}</code></pre>
+        </li>
+
+        <li>
+          <b>HTML Boilerplante</b>
+          <pre class="language-cpp"><code>
+            </code></pre>
+        </li>
+      </ol>
+    </div>
+
+    <footer>
+      <h2>
+        Made With <span style="color: red">&hearts;</span> By :
+        <b style="color: white">Darshan Trivedi</b>
+      </h2>
+    </footer>
+  </body>
+</html>
